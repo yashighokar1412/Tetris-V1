@@ -22,7 +22,7 @@ pipeline {
         stage("Docker Build") {
             steps {
                 script {
-                    sh "docker build -t tetrisv1 ."
+                    sh "docker build -t tetrisv2 ."
                 }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage("Docker Tag") {
             steps {
                 script {
-                    sh "docker tag tetrisv1 yashthedocker/tetrisv1:latest"
+                    sh "docker tag tetrisv2 yashthedocker/tetrisv2:latest"
                 }
             }
         }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
-                        sh "docker push yashthedocker/tetrisv1:latest"
+                        sh "docker push yashthedocker/tetrisv2:latest"
                     }
                 }
             }
