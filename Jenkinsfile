@@ -52,5 +52,12 @@ pipeline {
                 }
             }
         }
-    }
-}
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    withKubeConfig(caCertificate: '', clusterName: 'EKS_CLOUD', contextName: '', credentialsId: 'k8s', namespace: '', restrictKubeConfigAccess: false, serverUrl: 'https://BD94C7D55C73C308DB426D416C5A84E7.sk1.ap-south-1.eks.amazonaws.com') {
+                        sh "kubectl apply -f deployment.yml"
+                    }
+                }
+            }
+        }
