@@ -19,24 +19,23 @@ pipeline {
             }
         }
 
-        stage("Docker Build & Push") {
+        stage("Docker Build") {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
-                        sh "docker build -t tetrisv1 ."
-                    }
+                    sh "docker build -t tetrisv1 ."
                 }
             }
-            stage("Docker Build & Push") {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
-                        sh "docker tag tetrisv1 yashthedocker/tetrisv1:latest"
-                    }
-                }
-            }
+        }
 
-                stage("Docker Build & Push") {
+        stage("Docker Tag") {
+            steps {
+                script {
+                    sh "docker tag tetrisv1 yashthedocker/tetrisv1:latest"
+                }
+            }
+        }
+
+        stage("Docker Push") {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
@@ -44,16 +43,12 @@ pipeline {
                     }
                 }
             }
+        }
 
-            stage("Docker Build & Push") {
+        stage("Docker Images") {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
-                        sh "docker images"
-                    }
-                }
-            }
-            }
+                    sh "docker images"
                 }
             }
         }
