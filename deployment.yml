@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  labels:
+    app: Tetris
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: Tetris
+  template:
+    metadata:
+      labels:
+        app: Tetris
+    spec:
+      containers:
+      - name: Tetris
+        image: yashthedocker/tetrisv1:latest
+        ports:
+        - containerPort: 3000
