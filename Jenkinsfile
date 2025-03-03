@@ -18,5 +18,17 @@ pipeline {
                 }
             }
         }
+
+        stage("Docker Build & Push") {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh "docker build -t tetrisv1 ."
+                        sh "docker tag tetrisv1 yashthedocker/tetrisv1:latest"
+                        sh "docker push yashthedocker/tetrisv1:latest"
+                    }
+                }
+            }
+        }
     }
 }
