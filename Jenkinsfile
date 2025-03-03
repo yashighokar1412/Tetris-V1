@@ -57,13 +57,7 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: 'aws', region: 'ap-south-1') {
-                        withKubeConfig(
-                            clusterName: 'EKS_CLOUD', 
-                            contextName: 'arn:aws:eks:ap-south-1:084375558659:cluster/EKS_CLOUD', 
-                            credentialsId: 'k8s', 
-                            namespace: 'default',
-                            restrictKubeConfigAccess: false
-                        ) {
+                        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s', namespace: '', serverUrl: '']]) {
                             sh "kubectl apply -f deployment.yml"
                         }
                     }
