@@ -52,10 +52,18 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
+        stage("aws configure") {
             steps {
                 script {
                     withAWS(credentials: 'aws', region: 'ap-south-1')
+                    sh "aws s3 ls"
+                }
+            }
+        }
+            
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
                     withKubeConfig(caCertificate: '',
                                    clusterName: 'EKS_CLOUD', 
                                    contextName: 'arn:aws:eks:ap-south-1:084375558659:cluster/EKS_CLOUD', 
