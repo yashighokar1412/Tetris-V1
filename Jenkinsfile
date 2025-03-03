@@ -52,26 +52,20 @@ pipeline {
                 }
             }
         }
-        stage("aws configure") {
-            steps {
-                script {
-                    withAWS(credentials: 'aws', region: 'ap-south-1')
-                    sh "aws s3 ls"
-                }
-            }
-        }
-            
+
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    withKubeConfig(caCertificate: '',
-                                   clusterName: 'EKS_CLOUD', 
-                                   contextName: 'arn:aws:eks:ap-south-1:084375558659:cluster/EKS_CLOUD', 
-                                   credentialsId: 'k8s', 
-                                   namespace: 'default',
-                                   restrictKubeConfigAccess: false,
-                                   serverUrl: 'https://505595851AB6A8CD97F2A56932DE32EE.sk1.ap-south-1.eks.amazonaws.com') {
-                        sh "kubectl apply -f deployment.yml"
+                    withAWS(credentials: 'aws', region: 'ap-south-1') {
+                        withKubeConfig(
+                            clusterName: 'EKS_CLOUD', 
+                            contextName: 'arn:aws:eks:ap-south-1:084375558659:cluster/EKS_CLOUD', 
+                            credentialsId: 'k8s', 
+                            namespace: 'default',
+                            restrictKubeConfigAccess: false
+                        ) {
+                            sh "kubectl apply -f deployment.yml"
+                        }
                     }
                 }
             }
