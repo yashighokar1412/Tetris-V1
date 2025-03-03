@@ -70,7 +70,7 @@ pipeline {
                                    credentialsId: 'k8s', 
                                    namespace: 'default',
                                    restrictKubeConfigAccess: false,
-                                   serverUrl: 'https://BD94C7D55C73C308DB426D416C5A84E7.sk1.ap-south-1.eks.amazonaws.com') {
+                                   serverUrl: 'https://505595851AB6A8CD97F2A56932DE32EE.sk1.ap-south-1.eks.amazonaws.com') {
                         sh "kubectl apply -f deployment.yml"
                     }
                 }
